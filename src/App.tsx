@@ -26,10 +26,10 @@ function App() {
     
     try {
       const result = await emailjs.sendForm(
-        'service_st3ijwa', // Remplacez par votre Service ID
-        'j5lom1t', // Remplacez par votre Template ID
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         formRef.current!,
-        'b02iGkzSTi1Gi53Nj' // Remplacez par votre Public Key
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
       if (result.text === 'OK') {
