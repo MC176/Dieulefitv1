@@ -18,7 +18,8 @@ function App() {
     nom: '',
     prenom: '',
     dateNaissance: '',
-    adresse: ''
+    adresse: '',
+    message: ''
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,15 +27,15 @@ function App() {
     
     try {
       const result = await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        'service_st3ijwa', // Remplacez par votre Service ID
+        'template_eced47b', // Remplacez par votre Template ID
         formRef.current!,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        'b02iGkzSTi1Gi53Nj' // Remplacez par votre Public Key
       );
 
       if (result.text === 'OK') {
         toast.success('Votre demande a été envoyée avec succès !');
-        setFormData({ nom: '', prenom: '', dateNaissance: '', adresse: '' });
+        setFormData({ nom: '', prenom: '', dateNaissance: '', adresse: '', message: '' });
       }
     } catch (error) {
       toast.error('Une erreur est survenue. Veuillez réessayer.');
@@ -42,7 +43,7 @@ function App() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -251,6 +252,19 @@ function App() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message (facultatif)</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Partagez vos questions, attentes ou suggestions concernant le projet..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
                 />
               </div>
 
