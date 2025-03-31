@@ -286,7 +286,7 @@ function App() {
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-semibold mb-4">Bien Vieillir à Dieulefit</h3>
-              <p className="text-gray-400">Un projet innovant d'habitat partagé pour seniors actifs.</p>
+              <p className="text-gray-400">Un projet innovant d'habitat partagé pour seniors actifs. Par Frederic Tressol et Maxime Chauvin</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Contact</h3>
