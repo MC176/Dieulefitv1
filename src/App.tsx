@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import { Toaster, toast } from 'react-hot-toast';
 import {
   Heart,
   Home,
@@ -11,6 +13,7 @@ import {
 } from 'lucide-react';
 
 function App() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -18,12 +21,25 @@ function App() {
     adresse: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ nom: '', prenom: '', dateNaissance: '', adresse: '' });
+    
+    try {
+      const result = await emailjs.sendForm(
+        'YOUR_SERVICE_ID', // Remplacez par votre Service ID
+        'YOUR_TEMPLATE_ID', // Remplacez par votre Template ID
+        formRef.current!,
+        'YOUR_PUBLIC_KEY' // Remplacez par votre Public Key
+      );
+
+      if (result.text === 'OK') {
+        toast.success('Votre demande a été envoyée avec succès !');
+        setFormData({ nom: '', prenom: '', dateNaissance: '', adresse: '' });
+      }
+    } catch (error) {
+      toast.error('Une erreur est survenue. Veuillez réessayer.');
+      console.error('EmailJS Error:', error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,20 +49,22 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Toaster position="top-center" />
+      
       {/* Hero Section */}
       <header className="relative h-[600px] flex items-center justify-center text-white">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1454418747937-bd95bb945625?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")',
+            backgroundImage: 'url("/images/wallpaper.png")',
           }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Bien Vieillir en Communauté</h1>
-          <p className="text-xl mb-8">Une nouvelle approche du bien-être pour nos aînés à Dieulefit</p>
+          <h1 className="text-5xl font-bold mb-6">Bien Vieillir à Dieulefit</h1>
+          <p className="text-xl mb-8">Une nouvelle approche du bien-être pour nos aînés dans un cadre exceptionnel</p>
           <a href="#soutenir" className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-full transition-colors">
             Soutenir le projet
           </a>
@@ -63,16 +81,16 @@ function App() {
               <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Home className="w-8 h-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Espaces Adaptés</h3>
-              <p className="text-gray-600">Des lieux de vie partagés conçus pour le confort et l'autonomie</p>
+              <h3 className="text-xl font-semibold mb-3">Habitat Partagé</h3>
+              <p className="text-gray-600">Des espaces de vie conviviaux adaptés aux besoins des seniors</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Vie Communautaire</h3>
-              <p className="text-gray-600">Une approche sociale et participative du bien-vieillir</p>
+              <h3 className="text-xl font-semibold mb-3">Vie Sociale Active</h3>
+              <p className="text-gray-600">Une communauté dynamique et solidaire</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -80,7 +98,7 @@ function App() {
                 <Heart className="w-8 h-8 text-emerald-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Bien-être</h3>
-              <p className="text-gray-600">Des activités variées pour le corps et l'esprit</p>
+              <p className="text-gray-600">Un accompagnement personnalisé pour une vie épanouie</p>
             </div>
           </div>
         </div>
@@ -97,8 +115,8 @@ function App() {
                 <Home className="w-8 h-8 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Colocations Seniors</h3>
-                <p className="text-gray-600">Des espaces de vie partagés permettant de conserver son autonomie tout en profitant d'une vie sociale active.</p>
+                <h3 className="text-xl font-semibold mb-2">Habitat Partagé</h3>
+                <p className="text-gray-600">Des logements adaptés permettant de maintenir son autonomie tout en bénéficiant d'une présence bienveillante.</p>
               </div>
             </div>
 
@@ -107,8 +125,8 @@ function App() {
                 <Calendar className="w-8 h-8 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Espaces de Repos Temporaires</h3>
-                <p className="text-gray-600">Des solutions flexibles pour se ressourcer après une hospitalisation.</p>
+                <h3 className="text-xl font-semibold mb-2">Activités Quotidiennes</h3>
+                <p className="text-gray-600">Un programme varié d'activités sociales, culturelles et physiques adaptées.</p>
               </div>
             </div>
 
@@ -117,8 +135,8 @@ function App() {
                 <Flower2 className="w-8 h-8 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Jardins Thérapeutiques</h3>
-                <p className="text-gray-600">Des espaces verts conçus pour le bien-être et les activités thérapeutiques.</p>
+                <h3 className="text-xl font-semibold mb-2">Espaces Verts</h3>
+                <p className="text-gray-600">Des jardins thérapeutiques et des espaces extérieurs propices à la détente.</p>
               </div>
             </div>
 
@@ -127,8 +145,8 @@ function App() {
                 <Users className="w-8 h-8 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Activités Communautaires</h3>
-                <p className="text-gray-600">Des ateliers créatifs, culturels et physiques adaptés à tous les niveaux.</p>
+                <h3 className="text-xl font-semibold mb-2">Accompagnement</h3>
+                <p className="text-gray-600">Une équipe professionnelle à l'écoute pour un soutien personnalisé.</p>
               </div>
             </div>
           </div>
@@ -144,32 +162,32 @@ function App() {
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Un microclimat exceptionnel favorable au bien-être</p>
+                  <p className="text-gray-600">Un climat méditerranéen idéal pour le bien-être</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Proximité des commerces et services essentiels</p>
+                  <p className="text-gray-600">Une ville à taille humaine avec tous les services nécessaires</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Une communauté locale accueillante et dynamique</p>
+                  <p className="text-gray-600">Une vie culturelle riche et une communauté accueillante</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Un cadre naturel préservé au cœur de la Drôme provençale</p>
+                  <p className="text-gray-600">Un environnement naturel préservé en Drôme provençale</p>
                 </div>
               </div>
             </div>
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1558355658-0d2d99e6e667?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-                alt="Vue pittoresque de Dieulefit" 
+                src="/images/ville.jpg" 
+                alt="Vue panoramique de Dieulefit" 
                 className="rounded-lg shadow-xl object-cover h-[500px] w-full"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
               <div className="absolute bottom-4 left-4 text-white">
                 <p className="text-sm font-medium">Dieulefit, Drôme Provençale</p>
-                <p className="text-xs opacity-75">Un environnement paisible et ressourçant</p>
+                <p className="text-xs opacity-75">Un cadre de vie exceptionnel</p>
               </div>
             </div>
           </div>
@@ -179,10 +197,10 @@ function App() {
       {/* Support Form Section */}
       <section id="soutenir" className="bg-emerald-50 py-20 px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">Soutenez le Projet</h2>
-          <p className="text-center text-gray-600 mb-12">Votre soutien est essentiel pour faire de ce projet une réalité. Remplissez le formulaire ci-dessous pour nous rejoindre.</p>
+          <h2 className="text-3xl font-bold text-center mb-8">Participez au Projet</h2>
+          <p className="text-center text-gray-600 mb-12">Rejoignez-nous dans cette aventure humaine pour créer un lieu de vie innovant à Dieulefit.</p>
           
-          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
+          <form ref={formRef} onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
             <div className="space-y-6">
               <div>
                 <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
@@ -240,7 +258,7 @@ function App() {
                 type="submit"
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-md transition-colors flex items-center justify-center space-x-2"
               >
-                <span>Soutenir le projet</span>
+                <span>Je souhaite participer</span>
                 <Send className="w-5 h-5" />
               </button>
             </div>
@@ -253,25 +271,25 @@ function App() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">Bien Vieillir en Communauté</h3>
-              <p className="text-gray-400">Une initiative pour un vieillissement actif et solidaire à Dieulefit.</p>
+              <h3 className="text-xl font-semibold mb-4">Bien Vieillir à Dieulefit</h3>
+              <p className="text-gray-400">Un projet innovant d'habitat partagé pour seniors actifs.</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Contact</h3>
               <div className="space-y-2 text-gray-400">
                 <div className="flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
-                  <span>Dieulefit, France</span>
+                  <span>Dieulefit, Drôme (26220)</span>
                 </div>
               </div>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Suivez-nous</h3>
-              <p className="text-gray-400">Restez informé de l'avancement du projet et des prochaines réunions publiques.</p>
+              <p className="text-gray-400">Restez informé de l'avancement du projet et des prochaines réunions d'information.</p>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-            <p>&copy; 2025 Bien Vieillir en Communauté. Tous droits réservés.</p>
+            <p>&copy; 2025 Bien Vieillir à Dieulefit. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
