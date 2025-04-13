@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { Toaster, toast } from 'react-hot-toast';
 import {
@@ -9,12 +9,13 @@ import {
   Calendar,
   CheckCircle,
   MapPin,
-  Send
+  Send,
+  Building
 } from 'lucide-react';
 
 function App() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     nom: '',
     prenom: '',
     dateNaissance: '',
@@ -27,10 +28,10 @@ function App() {
     
     try {
       const result = await emailjs.sendForm(
-        'service_st3ijwa', // Remplacez par votre Service ID
-        'template_eced47b', // Remplacez par votre Template ID
+        'service_st3ijwa',
+        'template_eced47b',
         formRef.current!,
-        'b02iGkzSTi1Gi53Nj' // Remplacez par votre Public Key
+        'b02iGkzSTi1Gi53Nj'
       );
 
       if (result.text === 'OK') {
@@ -52,156 +53,168 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <Toaster position="top-center" />
       
-      {/* Hero Section */}
-      <header className="relative h-[600px] flex items-center justify-center text-white">
+      {/* Hero Section avec parallax */}
+      <header className="relative h-[600px] flex items-center justify-center text-white overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center z-0"
+          className="absolute inset-0 bg-cover bg-center z-0 transform scale-110"
           style={{
             backgroundImage: 'url("/images/wallpaper.png")',
+            backgroundAttachment: 'fixed'
           }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
         </div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Bien Vieillir à Dieulefit</h1>
-          <p className="text-xl mb-8">Une nouvelle approche du bien-être pour nos aînés dans un cadre exceptionnel</p>
-          <a href="#soutenir" className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-full transition-colors">
-            Soutenir le projet
+          <h1 className="text-6xl font-bold mb-6 tracking-tight">Bien Vieillir à Dieulefit</h1>
+          <p className="text-2xl mb-8 font-light leading-relaxed">Une nouvelle approche du bien-être pour nos aînés dans un cadre exceptionnel</p>
+          <a 
+            href="#soutenir" 
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg inline-flex items-center space-x-2"
+          >
+            <Heart className="w-5 h-5" />
+            <span>Soutenir le projet</span>
           </a>
         </div>
       </header>
 
-      {/* Features Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16">Notre Vision</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Home className="w-8 h-8 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Habitat Partagé</h3>
-              <p className="text-gray-600">Des espaces de vie conviviaux adaptés aux besoins des seniors</p>
+      {/* Contexte Section avec design moderne */}
+      <section className="py-24 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800">
+            Contexte et ambition du projet
+          </h2>
+          <div className="prose prose-lg max-w-none space-y-8">
+            <p className="text-gray-700 leading-relaxed text-lg">
+              Face aux défis posés par l'allongement de l'espérance de vie et aux limites des structures d'hébergements classiques, nous proposons de réfléchir, avec tous les Dieulefitois qui le souhaitent, à une alternative qui soit humaine, adaptée et accessible au plus grand nombre.
+            </p>
+            <div className="bg-emerald-50 p-8 rounded-2xl border border-emerald-100">
+              <p className="text-gray-700 leading-relaxed text-lg mb-0">
+                Il s'agit d'accompagner les personnes du 3eme et 4eme âge, au plus près du type d'habitat qu'ils souhaitent, tant dans son emplacement, que dans sa configuration et son aménagement.
+              </p>
             </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Vie Sociale Active</h3>
-              <p className="text-gray-600">Une communauté dynamique et solidaire</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Bien-être</h3>
-              <p className="text-gray-600">Un accompagnement personnalisé pour une vie épanouie</p>
-            </div>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              Deux structures (à créer) assureront, l'une la réalisation et la gestion de l'habitat proprement dit, l'autre l'aspect plus humain et social des relations entre les habitants et avec les partenaires extérieurs concernés le cas échéant. Dans le cadre législatif et règlementaire de l'Habitat Inclusif, un animateur de vie partagée veillera à l'organisation et une saine efficacité de ces relations.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="bg-emerald-50 py-20 px-4">
+      {/* Approche Section avec cards modernes */}
+      <section className="py-24 px-4 bg-emerald-50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16">Nos Services</h2>
-          
+          <h2 className="text-4xl font-bold mb-16 text-center text-gray-800">
+            Une approche flexible et humaine
+          </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <Home className="w-8 h-8 text-emerald-600" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105">
+              <div className="flex items-center mb-6">
+                <div className="bg-emerald-100 p-3 rounded-full">
+                  <Home className="w-8 h-8 text-emerald-600" />
+                </div>
+                <h3 className="text-2xl font-semibold ml-4 text-gray-800">Façon Béguinages</h3>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Habitat Partagé</h3>
-                <p className="text-gray-600">Des logements adaptés permettant de maintenir son autonomie tout en bénéficiant d'une présence bienveillante.</p>
-              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Pour avoir « sa maison » sans les inconvénients qui en faisaient le charme quand on était plus jeune. Types T1, T2, ou T3 avec ou sans un petit espace privatif extérieur.
+              </p>
             </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <Calendar className="w-8 h-8 text-emerald-600" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105">
+              <div className="flex items-center mb-6">
+                <div className="bg-emerald-100 p-3 rounded-full">
+                  <Users className="w-8 h-8 text-emerald-600" />
+                </div>
+                <h3 className="text-2xl font-semibold ml-4 text-gray-800">Colocations seniors</h3>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Activités Quotidiennes</h3>
-                <p className="text-gray-600">Un programme varié d'activités sociales, culturelles et physiques adaptées.</p>
-              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Pour ceux qui souhaitent partager leur quotidien avec d'autres personnes tout en conservant leur autonomie.
+              </p>
             </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <Flower2 className="w-8 h-8 text-emerald-600" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105">
+              <div className="flex items-center mb-6">
+                <div className="bg-emerald-100 p-3 rounded-full">
+                  <Building className="w-8 h-8 text-emerald-600" />
+                </div>
+                <h3 className="text-2xl font-semibold ml-4 text-gray-800">Espaces de repos</h3>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Espaces Verts</h3>
-                <p className="text-gray-600">Des jardins thérapeutiques et des espaces extérieurs propices à la détente.</p>
-              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Pour se ressourcer après un incident de santé ou une hospitalisation. Accueil à la semaine ou au mois.
+              </p>
             </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <Users className="w-8 h-8 text-emerald-600" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105">
+              <div className="flex items-center mb-6">
+                <div className="bg-emerald-100 p-3 rounded-full">
+                  <Flower2 className="w-8 h-8 text-emerald-600" />
+                </div>
+                <h3 className="text-2xl font-semibold ml-4 text-gray-800">Jardins partagés</h3>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Accompagnement</h3>
-                <p className="text-gray-600">Une équipe professionnelle à l'écoute pour un soutien personnalisé.</p>
-              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Espaces verts dédiés aux seniors, ouverts aux non-résidents, pour se détendre ou participer à des activités thérapeutiques.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Location Section */}
-      <section className="py-20 px-4">
+      {/* Complexe Section avec image et texte */}
+      <section className="py-24 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-16 text-center text-gray-800">
+            Exemple d'un complexe de 3 unités de vie
+          </h2>
+          
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Pourquoi Dieulefit ?</h2>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Un climat méditerranéen idéal pour le bien-être</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Une ville à taille humaine avec tous les services nécessaires</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Une vie culturelle riche et une communauté accueillante</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-1" />
-                  <p className="text-gray-600">Un environnement naturel préservé en Drôme provençale</p>
-                </div>
+            <div className="space-y-6">
+              <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                <h3 className="text-xl font-semibold text-emerald-800 mb-3">Architecture adaptée</h3>
+                <p className="text-gray-700">
+                  Chaque unité est conçue pour maximiser le confort et l'autonomie, avec des espaces de vie lumineux et des accès facilités.
+                </p>
+              </div>
+
+              <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                <h3 className="text-xl font-semibold text-emerald-800 mb-3">Espaces communs</h3>
+                <p className="text-gray-700">
+                  Des zones partagées favorisent la convivialité et les activités collectives, tout en préservant l'intimité de chacun.
+                </p>
+              </div>
+
+              <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                <h3 className="text-xl font-semibold text-emerald-800 mb-3">Accessibilité optimale</h3>
+                <p className="text-gray-700">
+                  La conception de plain-pied et les aménagements adaptés garantissent une mobilité aisée pour tous les résidents.
+                </p>
               </div>
             </div>
-            <div className="relative">
-              <img 
-                src="/images/ville.jpg" 
-                alt="Vue panoramique de Dieulefit" 
-                className="rounded-lg shadow-xl object-cover h-[500px] w-full"
+
+            <div className="overflow-hidden rounded-2xl shadow-2xl">
+              <img
+                src="/images/plan.png"
+                alt="Complexe de 3 unités de vie"
+                className="w-[773px] h-[559px] object-contain"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
-              <div className="absolute bottom-4 left-4 text-white">
-                <p className="text-sm font-medium">Dieulefit, Drôme Provençale</p>
-                <p className="text-xs opacity-75">Un cadre de vie exceptionnel</p>
-              </div>
             </div>
+          </div>
+
+          <div className="prose prose-lg max-w-4xl mx-auto mt-16">
+            <p className="text-gray-700 leading-relaxed text-lg mb-8">
+              Plusieurs terrains (d'environ 1000m² chacun) seraient nécessaires pour couvrir notre territoire d'autant de « complexes d'unité de vie » (Béguinages, colocations…) que nécessaire.
+            </p>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              Au fur et à mesure des réflexions, nous trouverons ensemble les solutions adaptées et souhaitées à Dieulefit et, pourquoi pas, plus largement sur la Communauté de Communes Dieulefit Bourdeaux, à l'instar du développement du concept de « Quartier Inclusif » par l'association Bien Vivre et bien Vieillir Ensemble chez soi du quartier des Rouvières.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Support Form Section */}
-      <section id="soutenir" className="bg-emerald-50 py-20 px-4">
+      {/* Support Form Section avec design moderne */}
+      <section id="soutenir" className="bg-emerald-50 py-24 px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">Participez au Projet</h2>
-          <p className="text-center text-gray-600 mb-12">Rejoignez-nous dans cette aventure humaine pour créer un lieu de vie innovant à Dieulefit.</p>
+          <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">Soutenir le projet</h2>
+          <p className="text-center text-gray-600 text-lg mb-12 leading-relaxed">
+            Pour concrétiser ce projet ambitieux, nous souhaitons impliquer pleinement les habitants de Dieulefit et les acteurs locaux. Votre soutien est essentiel !
+          </p>
           
-          <form ref={formRef} onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
+          <form ref={formRef} onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-lg">
             <div className="space-y-6">
               <div>
                 <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
@@ -212,7 +225,7 @@ function App() {
                   value={formData.nom}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
                 />
               </div>
 
@@ -225,7 +238,7 @@ function App() {
                   value={formData.prenom}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
                 />
               </div>
 
@@ -238,7 +251,7 @@ function App() {
                   value={formData.dateNaissance}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
                 />
               </div>
 
@@ -251,7 +264,7 @@ function App() {
                   value={formData.adresse}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
                 />
               </div>
 
@@ -264,15 +277,15 @@ function App() {
                   onChange={handleChange}
                   rows={4}
                   placeholder="Partagez vos questions, attentes ou suggestions concernant le projet..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none transition-all duration-200"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-md transition-colors flex items-center justify-center space-x-2"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
               >
-                <span>Je souhaite participer</span>
+                <span>Je soutiens le projet</span>
                 <Send className="w-5 h-5" />
               </button>
             </div>
@@ -280,29 +293,38 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12 px-4">
+      {/* Footer avec design moderne */}
+      <footer className="bg-gray-800 text-white py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-xl font-semibold mb-4">Bien Vieillir à Dieulefit</h3>
-              <p className="text-gray-400">Un projet innovant d'habitat partagé pour seniors actifs. Par Frederic Tressol et Maxime Chauvin</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Contact</h3>
-              <div className="space-y-2 text-gray-400">
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-5 h-5" />
-                  <span>Dieulefit, Drôme (26220)</span>
-                </div>
+              <h3 className="text-2xl font-semibold mb-6">Porteurs du projet</h3>
+              <div className="space-y-4 text-gray-300">
+                <p className="flex items-center space-x-2">
+                  <CheckCircle className="w-5 h-5 text-emerald-400" />
+                  <span>Maxime CHAUVIN - Expert juridique et financier</span>
+                </p>
+                <p className="flex items-center space-x-2">
+                  <CheckCircle className="w-5 h-5 text-emerald-400" />
+                  <span>Frédéric TRESSOL - Jeune retraité de l'encadrement d'« Aide et Accompagnement à Domicile », et de structures Médico-sociales de l'Economie Sociale et Solidaire</span>
+                </p>
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-4">Suivez-nous</h3>
-              <p className="text-gray-400">Restez informé de l'avancement du projet et des prochaines réunions d'information.</p>
+              <h3 className="text-2xl font-semibold mb-6">Contact</h3>
+              <div className="space-y-4 text-gray-300">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-6 h-6 text-emerald-400" />
+                  <span>Dieulefit, Drôme (26220)</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Calendar className="w-6 h-6 text-emerald-400" />
+                  <span>Réunions publiques prévues pour l'été 2025</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+          <div className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
             <p>&copy; 2025 Bien Vieillir à Dieulefit. Tous droits réservés.</p>
           </div>
         </div>
