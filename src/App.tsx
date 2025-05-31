@@ -26,21 +26,29 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formRef.current) {
+      toast.error('Erreur du formulaire. Veuillez rafraîchir la page.');
+      return;
+    }
+    
     try {
       const result = await emailjs.sendForm(
         'service_st3ijwa',
         'template_eced47b',
-        formRef.current!,
+        formRef.current,
         'b02iGkzSTi1Gi53Nj'
       );
 
       if (result.text === 'OK') {
         toast.success('Votre demande a été envoyée avec succès !');
         setFormData({ nom: '', prenom: '', dateNaissance: '', adresse: '', message: '' });
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       }
     } catch (error) {
-      toast.error('Une erreur est survenue. Veuillez réessayer.');
       console.error('EmailJS Error:', error);
+      toast.error('Une erreur est survenue lors de l\'envoi. Veuillez vérifier votre connexion internet et réessayer.');
     }
   };
 
@@ -69,7 +77,7 @@ function App() {
           <h1 className="text-6xl font-bold mb-6 tracking-tight">Bien Vieillir à Dieulefit</h1>
           <p className="text-2xl mb-8 font-light leading-relaxed">Une nouvelle approche du bien-être pour nos aînés dans un cadre exceptionnel</p>
           <a 
-            href="#soutenir" 
+            href="#manifester-interet" 
             className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg inline-flex items-center space-x-2"
           >
             <Heart className="w-5 h-5" />
@@ -207,7 +215,7 @@ function App() {
       </section>
 
       {/* Support Form Section avec design moderne */}
-      <section id="Portez votre voix" className="bg-emerald-50 py-24 px-4">
+      <section id="manifester-interet" className="bg-emerald-50 py-24 px-4">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">Manifestez votre projet</h2>
           <p className="text-center text-gray-600 text-lg mb-12 leading-relaxed">
