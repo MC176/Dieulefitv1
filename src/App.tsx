@@ -207,9 +207,9 @@ function App() {
       </section>
 
       {/* Support Form Section avec design moderne */}
-      <section id="soutenir" className="bg-emerald-50 py-24 px-4">
+      <section id="Portez votre voix" className="bg-emerald-50 py-24 px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">Soutenir le projet</h2>
+          <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">Manifestez votre projet</h2>
           <p className="text-center text-gray-600 text-lg mb-12 leading-relaxed">
             Pour concrétiser ce projet ambitieux, nous souhaitons impliquer pleinement les habitants de Dieulefit et les acteurs locaux. Votre soutien est essentiel !
           </p>
