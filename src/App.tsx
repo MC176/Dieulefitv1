@@ -73,7 +73,7 @@ function App() {
             className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg inline-flex items-center space-x-2"
           >
             <Heart className="w-5 h-5" />
-            <span>Soutenir le projet</span>
+            <span>Manifestez votre intérêt</span>
           </a>
         </div>
       </header>
@@ -285,7 +285,7 @@ function App() {
                 type="submit"
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
               >
-                <span>Je soutiens le projet</span>
+                <span>Je manifeste mon intérêt pour le projet</span>
                 <Send className="w-5 h-5" />
               </button>
             </div>
